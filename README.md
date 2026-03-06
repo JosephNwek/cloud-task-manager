@@ -1,21 +1,20 @@
 # Cloud Task Manager
 
-## Overview
-
-This project is a cloud-based task manager application built using containerized microservices.
-
-The system consists of two services:
-
-1. Frontend Web Service
-2. Backend Task API Service
-
-Both services will run in Docker containers and communicate with each other through a REST API.
+Author: Joseph Nweke  
+Course: CSC 468 - Introduction to Cloud Computing
 
 ---
 
 ## Vision
 
-The goal of this project is to demonstrate a simple microservices-based cloud application.
+The goal of this project is to build a simple cloud-based task management system using containerized services.
+
+The system will contain two components:
+
+1. Frontend Web Application
+2. Backend Task API
+
+The frontend will communicate with the backend through a REST API.
 
 Architecture Diagram:
 
@@ -29,28 +28,20 @@ REST API
  v
 Backend Task API Service
 
-The frontend service will allow users to add and view tasks through a simple web interface.
-
-The backend service will handle task management through REST API endpoints.
-
-Both services will run inside Docker containers and communicate through a Docker network managed by Docker Compose.
-
 ---
 
 ## Proposal
 
-The system will use the following base images:
+This project will use Docker containers to run two services.
 
 Frontend Service
-Base Image: python:3.11  
-Framework: Flask  
-Purpose: Provide a web interface for users to submit and view tasks.
+- Base Image: Python
+- Framework: Flask
+- Purpose: Provide the web interface where users can create and view tasks.
 
 Backend Service
-Base Image: python:3.11  
-Framework: Flask  
-Purpose: Provide a REST API to store and retrieve tasks.
+- Base Image: Python
+- Framework: Flask
+- Purpose: Provide REST API endpoints that store and manage task data.
 
-Each service will run in its own container and will communicate over HTTP using REST API requests.
-
-Future deliverables will include implementing the application logic, connecting the services, and deploying the system in a cloud environment.
+The frontend and backend services will communicate through HTTP requests using a REST API.
