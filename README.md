@@ -19,24 +19,26 @@ The frontend will communicate with the backend through a **REST API**.
 ---
 
 ## Architecture Diagram
-  +------------------+
-  |       User       |
-  +------------------+
-           |
-           v
-  +------------------+
-  |  Frontend App    |
-  |  (Flask Service) |
-  +------------------+
-           |
-       REST API
-           |
-           v
-  +------------------+
-  |  Backend API     |
-  |  (Flask Service) |
-  +------------------+
-  
+
+```
++------------------+
+|       User       |
++------------------+
+        |
+        v
++------------------+
+|  Frontend App    |
+|  (Flask Service) |
++------------------+
+        |
+     REST API
+        |
+        v
++------------------+
+|  Backend API     |
+|  (Flask Service) |
++------------------+
+```
 ---
 
 ## Proposal
