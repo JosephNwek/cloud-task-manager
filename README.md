@@ -18,18 +18,24 @@ The frontend will communicate with the backend through a REST API.
 
 Architecture Diagram:
 
-User
- |
- v
-Frontend Web Service
- |
-REST API
- |
- v
-Backend Task API Service
-
----
-
+  +------------------+
+  |       User       |
+  +------------------+
+           |
+           v
+  +------------------+
+  |  Frontend App    |
+  |  (Flask Service) |
+  +------------------+
+           |
+       REST API
+           |
+           v
+  +------------------+
+  |  Backend API     |
+  |  (Flask Service) |
+  +------------------+
+  
 ## Proposal
 
 This project will use Docker containers to run two services.
