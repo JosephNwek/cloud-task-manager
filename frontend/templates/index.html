@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Cloud Task Manager</title>
+</head>
+<body>
+    <h1>Tasks</h1>
+    <ul>
+        {% for task in tasks %}
+        <li>{{ task.title }} - {{ task.description }} - {% if task.completed %}✔{% else %}❌{% endif %}</li>
+        {% endfor %}
+    </ul>
+
+    <h2>Add Task</h2>
+    <form action="/add" method="post">
+        Title: <input type="text" name="title"><br>
+        Description: <input type="text" name="description"><br>
+        <button type="submit">Add</button>
+    </form>
+</body>
+</html>
