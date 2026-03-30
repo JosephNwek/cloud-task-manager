@@ -47,20 +47,45 @@ The frontend communicates with the backend through a REST API.
 ```
 ---
 
+
 ## Proposal
 
-This project will use **Docker containers** to run two services: frontend and backend.
+This project will use Docker containers to run two services.
 
 ### Frontend Service
 
-- **Base Image:** Python  
-- **Framework:** Flask  
-- **Purpose:** Provide the web interface where users can create and view tasks.
+- Base Image: Python
+- Framework: Flask
+- Purpose: Provide the web interface where users can create and view tasks.
 
 ### Backend Service
 
-- **Base Image:** Python  
-- **Framework:** Flask  
-- **Purpose:** Provide REST API endpoints that store and manage task data.
+- Base Image: Python
+- Framework: Flask
+- Purpose: Provide REST API endpoints that store and manage task data.
 
-The frontend and backend services will communicate through **HTTP requests using a REST API**.
+The frontend and backend services communicate through HTTP requests using a REST API.
+
+## Build Process
+
+### Backend Dockerfile
+- `FROM python:3.11-slim` → lightweight Python base
+- `WORKDIR /app` → set working directory
+- `COPY . /app` → copy backend code
+- `RUN pip install flask` → install Flask
+- `EXPOSE 5000` → expose port
+- `CMD ["python", "app.py"]` → start the app
+
+### Frontend Dockerfile
+- `FROM python:3.11-slim` → lightweight Python base
+- `WORKDIR /app` → set working directory
+- `COPY . /app` → copy frontend code
+- `RUN pip install flask requests` → install Flask + requests
+- `EXPOSE 5000` → expose port
+- `CMD ["python", "app.py"]` → start the app
+
+## Networking
+
+- Both frontend and backend containers are on Docker Compose's default bridge network
+- Frontend communicates with backend using container name as hostname: `http://backend:5000/tasks`
+- Docker automatically handles DNS resolution between containers
