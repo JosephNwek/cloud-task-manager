@@ -1,24 +1,30 @@
 # Cloud Task Manager
 
 **Author:** Joseph Nweke  
-**Course:** CSC 468 - Introduction to Cloud Computing  
-
----
+**Course:** CSC 468 - Introduction to Cloud Computing
 
 ## Vision
 
-The goal of this project is to build a simple **cloud-based task management system** using containerized services.
+The goal of this project is to build a simple cloud-based task management system using containerized services.
 
-The system will contain **two components**:
+### Tasks Managed
 
-1. **Frontend Web Application**  
-2. **Backend Task API**
+The Cloud Task Manager infrastructure will manage the following tasks:
 
-The frontend will communicate with the backend through a **REST API**.
+- Create new tasks (title, description, due date)
+- List all tasks
+- Mark tasks as completed
+- Delete tasks
+- Optionally, filter tasks by status (pending/completed)
 
----
+### System Components
 
-## Architecture Diagram
+- Frontend Web Application
+- Backend Task API
+
+The frontend communicates with the backend through a REST API.
+
+### Architecture Diagram
 
 ```
 +------------------+
