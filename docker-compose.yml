@@ -11,6 +11,6 @@ services:
     build: ./frontend
     container_name: frontend
     ports:
-      - "5000:5000"
+      - "5002:5000"
     depends_on:
       - backend
