@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cloud Task Manager</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #0f172a;
+            color: #e2e8f0;
+            min-height: 100vh;
+            padding: 2rem;
+        }
+
+        .container {
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 2.5rem;
+        }
+
+        header h1 {
+            font-size: 2.2rem;
+            font-weight: 700;
+            color: #38bdf8;
+            letter-spacing: -0.5px;
+        }
+
+        header p {
+            color: #94a3b8;
+            margin-top: 0.4rem;
+            font-size: 0.95rem;
+        }
+
+        .card {
+            background: #1e293b;
+            border: 1px solid #334155;
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .card h2 {
+            font-size: 1rem;
+            font-weight: 600;
+            color: #94a3b8;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 1rem;
+        }
+
+        .form-row {
+            display: flex;
+            gap: 0.75rem;
+            flex-wrap: wrap;
+        }
+
+        input[type="text"] {
+            flex: 1;
+            min-width: 140px;
+            background: #0f172a;
+            border: 1px solid #475569;
+            border-radius: 8px;
+            padding: 0.6rem 0.9rem;
+            color: #e2e8f0;
+            font-size: 0.95rem;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        input[type="text"]:focus {
+            border-color: #38bdf8;
+        }
+
+        input[type="text"]::placeholder {
+            color: #475569;
+        }
+
+        button {
+            background: #38bdf8;
+            color: #0f172a;
+            border: none;
+            border-radius: 8px;
+            padding: 0.6rem 1.2rem;
+            font-size: 0.95rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        button:hover {
+            background: #7dd3fc;
+        }
+
+        .btn-danger {
+            background: #f43f5e;
+            color: white;
+            padding: 0.4rem 0.8rem;
+            font-size: 0.8rem;
+        }
+
+        .btn-danger:hover { background: #fb7185; }
+
+        .btn-success {
+            background: #22c55e;
+            color: white;
+            padding: 0.4rem 0.8rem;
+            font-size: 0.8rem;
+        }
+
+        .btn-success:hover { background: #4ade80; }
+
+        .btn-undo {
+            background: #64748b;
+            color: white;
+            padding: 0.4rem 0.8rem;
+            font-size: 0.8rem;
+        }
+
+        .btn-undo:hover { background: #94a3b8; }
+
+        .task-list {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+
+        .task-item {
+            background: #0f172a;
+            border: 1px solid #334155;
+            border-radius: 10px;
+            padding: 1rem 1.2rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1rem;
+            transition: border-color 0.2s;
+        }
+
+        .task-item:hover {
+            border-color: #38bdf8;
+        }
+
+        .task-item.done {
+            opacity: 0.6;
+            border-color: #22c55e33;
+        }
+
+        .task-info { flex: 1; }
+
+        .task-title {
+            font-weight: 600;
+            font-size: 1rem;
+            color: #f1f5f9;
+        }
+
+        .task-item.done .task-title {
+            text-decoration: line-through;
+            color: #64748b;
+        }
+
+        .task-desc {
+            font-size: 0.85rem;
+            color: #94a3b8;
+            margin-top: 0.2rem;
+        }
+
+        .task-actions {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .empty {
+            text-align: center;
+            color: #475569;
+            padding: 2rem;
+            font-size: 0.95rem;
+        }
+
+        .stats {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .stat {
+            flex: 1;
+            background: #1e293b;
+            border: 1px solid #334155;
+            border-radius: 10px;
+            padding: 1rem;
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #38bdf8;
+        }
+
+        .stat-label {
+            font-size: 0.8rem;
+            color: #64748b;
+            margin-top: 0.2rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>☁ Cloud Task Manager</h1>
+            <p>CSC 468 — Cloud Computing · Joseph Nweke</p>
+        </header>
+
+        <!-- Stats -->
+        {% set total = tasks | length %}
+        {% set done = tasks | selectattr('completed') | list | length %}
+        {% set pending = total - done %}
+        <div class="stats">
+            <div class="stat">
+                <div class="stat-number">{{ total }}</div>
+                <div class="stat-label">Total Tasks</div>
+            </div>
+            <div class="stat">
+                <div class="stat-number" style="color:#f59e0b;">{{ pending }}</div>
+                <div class="stat-label">Pending</div>
+            </div>
+            <div class="stat">
+                <div class="stat-number" style="color:#22c55e;">{{ done }}</div>
+                <div class="stat-label">Completed</div>
+            </div>
+        </div>
+
+        <!-- Add Task -->
+        <div class="card">
+            <h2>New Task</h2>
+            <form action="/add" method="post">
+                <div class="form-row">
+                    <input type="text" name="title" placeholder="Task title..." required>
+                    <input type="text" name="description" placeholder="Description (optional)">
+                    <button type="submit">+ Add</button>
+                </div>
+            </form>
+        </div>
+
+        <!-- Task List -->
+        <div class="card">
+            <h2>Tasks ({{ total }})</h2>
+            <div class="task-list">
+                {% if tasks %}
+                    {% for task in tasks %}
+                    <div class="task-item {% if task.completed %}done{% endif %}">
+                        <div class="task-info">
+                            <div class="task-title">{{ task.title }}</div>
+                            {% if task.description %}
+                            <div class="task-desc">{{ task.description }}</div>
+                            {% endif %}
+                        </div>
+                        <div class="task-actions">
+                            <form action="/toggle/{{ task.id }}" method="post" style="display:inline">
+                                {% if task.completed %}
+                                <button type="submit" class="btn-undo">↩ Undo</button>
+                                {% else %}
+                                <button type="submit" class="btn-success">✓ Done</button>
+                                {% endif %}
+                            </form>
+                            <form action="/delete/{{ task.id }}" method="post" style="display:inline">
+                                <button type="submit" class="btn-danger">✕</button>
+                            </form>
+                        </div>
+                    </div>
+                    {% endfor %}
+                {% else %}
+                    <div class="empty">No tasks yet. Add one above!</div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</body>
+</html>
